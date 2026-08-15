@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Admin Tools</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <header>
+            <h1>MakerSpace Staff Portal</h1>
+            <details>
+                <summary>☰</summary>
+                <nav>
+                    <ul>
+                        <li><a href="{{ url_for('staff_dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('staff_admin_tools') }}">Admin Tools</a></li>
+                        <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                    </ul>
+                </nav>
+            </details>
+        </header>
+        <main>
+            <h2>Admin Tools</h2>
+
+            <section>
+                <h3>All Reservations</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Equipment</th>
+                            <th scope="col">Student</th>
+                            <th scope="col">Start</th>
+                            <th scope="col">End</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Update</th>
+                            <th scope="col">Cancel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reservation in reservations %}
+                        <tr>
+                            <td>{{ reservation.id }}</td>
+                            <td>{{ reservation.equipmentID }}</td>
+                            <td>{{ reservation.userID }}</td>
+                            <td>{{ reservation.startTime }}</td>
+                            <td>{{ reservation.endTime }}</td>
+                            <td>{{ reservation.status }}</td>
+                            <td>
+                                <form action="/staff/reservations/{{ reservation.id }}/update" method="POST">
+                                    <select name="status" required>
+                                        <option value="Active" {% if reservation.status == 'Active' %}selected{% endif %}>Active</option>
+                                        <option value="Completed" {% if reservation.status == 'Completed' %}selected{% endif %}>Completed</option>
+                                        <option value="Cancelled" {% if reservation.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                                    </select>
+                                    <button type="submit">Update</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="/staff/reservations/{{ reservation.id }}/cancel" method="POST">
+                                    <button type="submit">Cancel</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="8">No reservations on record.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h3>Consumable Inventory</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Item</th>
+                            <th scope="col">Count</th>
+                            <th scope="col">Adjust</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in consumables %}
+                        <tr>
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.manufacturer }} {{ item.model }}</td>
+                            <td>{{ item.count }}</td>
+                            <td>
+                                <form action="/staff/consumables/{{ item.id }}/adjust" method="POST">
+                                    <input type="number" name="delta" placeholder="e.g. -5 or 20" required>
+                                    <button type="submit">Apply</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4">No consumables on record.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Equipment</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <header>
+            <h1>MakerSpace Maintenance Portal</h1>
+            <details>
+                <summary>☰</summary>
+                <nav>
+                    <ul>
+                        <li><a href="{{ url_for('maintenance_dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('maintenance_equipment_page') }}">Equipment</a></li>
+                        <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                    </ul>
+                </nav>
+            </details>
+        </header>
+        <main>
+            <h2>Equipment &amp; Lifecycle</h2>
+
+            <section>
+                <h3>Equipment Inventory</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Equipment</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in equipment %}
+                        <tr>
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.manufacturer }} {{ item.model }}</td>
+                            <td>{{ item.status }}</td>
+                            <td>
+                                {% if item.has_ticket %}
+                                <form action="/maintenance/equipment/{{ item.id }}/status" method="POST">
+                                    <input type="hidden" name="status" value="Available">
+                                    <button type="submit">Mark Available</button>
+                                </form>
+                                {% else %}
+                                <span>&mdash;</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4">No equipment on record.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h4>Add Equipment</h4>
+                <form action="/maintenance/equipment/new" method="POST">
+                    <label for="manufacturer">Manufacturer</label>
+                    <input type="text" id="manufacturer" name="manufacturer" required>
+
+                    <label for="model">Model</label>
+                    <input type="text" id="model" name="model" required>
+
+                    <button type="submit">Add Equipment</button>
+                </form>
+            </section>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Manage Reservation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>MakerSpace Student Portal</h1>
+        <details>
+            <summary>☰</summary>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('student_dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('show_reservation_form') }}">Request Reservation</a></li>
+                    <li><a href="{{ url_for('manage_reservations') }}">Manage Reservations</a></li>
+                    <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                </ul>
+            </nav>
+        </details>
+    </header>
+    <main>
+        <h2>Manage Reservation</h2>
+
+        <section>
+            <h3>Future Reservations</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reservation in future_reservations %}
+                    <tr>
+                        <td>{{ reservation.id }}</td>
+                        <td>
+                            <form action="/reservations/{{ reservation.id }}/cancel" method="POST">
+                                <button type="submit">Cancel</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h3>Active Reservations</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reservation in active_reservations %}
+                    <tr>
+                        <td>{{ reservation.id }}</td>
+                        <td>
+                            {% if reservation.id == ending_id %}
+                                <span>Ending&hellip;</span>
+                            {% else %}
+                                <a href="{{ url_for('manage_reservations', end=reservation.id) }}">End</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        {% if ending_id %}
+        <section>
+            <h3>Submit a Ticket &mdash; Reservation {{ ending_id }}</h3>
+            <p>Please let us know how the equipment was left before ending this reservation.</p>
+
+            <form action="/reservations/{{ ending_id }}/end" method="POST">
+                <label for="issue-type">Issue Type</label>
+                <select id="issue-type" name="issueType" required>
+                    <option value="">Select an issue</option>
+                    <option value="none">No issues</option>
+                    <option value="damage">Equipment damage</option>
+                    <option value="malfunction">Malfunction</option>
+                    <option value="missing-parts">Missing parts/consumables</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="4"></textarea>
+
+                <button type="submit">Submit and End Reservation</button>
+                <a href="{{ url_for('manage_reservations') }}">Cancel</a>
+            </form>
+        </section>
+        {% endif %}
+
+    </main>
+</body>
+</html>

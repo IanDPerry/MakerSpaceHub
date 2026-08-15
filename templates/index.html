@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title>Login</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <h1>MakerSpace Hub+ Portal</h1>
+        <form action="/login" method="post">
+            <input type="text" name="username" id="username" placeholder="username"><br><br>
+            <input type="password" name="password" id="password" placeholder="password"><br><br>
+            <input type="submit" value="Login">
+        </form>
+
+    </body>
+</html>

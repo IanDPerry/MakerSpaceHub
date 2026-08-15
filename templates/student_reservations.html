@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Reservations</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <header>
+            <h1>MakerSpace Student Portal</h1>
+            <details>
+                <summary>☰</summary>
+                <nav>
+                    <ul>
+                        <li><a href="{{ url_for('student_dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('show_reservation_form') }}">Request Reservation</a></li>
+                        <li><a href="{{ url_for('manage_reservations') }}">Manage Reservations</a></li>
+                        <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+
+                    </ul>
+                </nav>
+            </details>
+        </header>
+        <main>
+            <h2>Request Reservation</h2>
+            <form action="/reservations/new" method="POST">
+
+                <section>
+                    <h3>Equipment Availability</h3>
+                    <ul>
+                        {% for item in available_equipment %}
+                        <li>
+                            <label>
+                                <input type="checkbox" name="equipment" value="{{ item.id }}">
+                                {{ item.name }}
+                            </label>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Consumable Availability</h3>
+                    <ul>
+                        {% for item in available_consumables %}
+                        <li>
+                            <label>
+                                <input type="checkbox" name="consumables" value="{{ item.id }}">
+                                {{ item.name }}
+                            </label>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+
+            <section>
+                <h3>Duration</h3>
+                <label for="start-time">Start</label>
+                <input type="datetime-local" id="start-time" name="start" required>
+
+                <label for="end-time">End</label>
+                <input type="datetime-local" id="end-time" name="end" required>
+            </section>
+
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+</body>
+</html>

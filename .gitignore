@@ -1,0 +1,21 @@
+# Environment
+local.env
+.env
+.venv/
+venv/
+
+# VS Code
+.vscode/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# MakerSpace data folder (ignore all except required CSVs)
+MakerSpace_data/
+!MakerSpace_data/Accounts.csv
+!MakerSpace_data/Users.csv
+!MakerSpace_data/Roles.csv
+!MakerSpace_data/EquipmentInventory.csv
+!MakerSpace_data/ConsumableInventory.csv
+!MakerSpace_data/Credential_references/**

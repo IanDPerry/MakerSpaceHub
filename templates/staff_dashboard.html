@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Dashboard</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <header>
+            <h1>MakerSpace Staff Portal</h1>
+            <details>
+                <summary>☰</summary>
+                <nav>
+                    <ul>
+                        <li><a href="{{ url_for('staff_dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('staff_admin_tools') }}">Admin Tools</a></li>
+                        <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                    </ul>
+                </nav>
+            </details>
+        </header>
+        <main>
+            <section>
+                <h2>Ticket Overview</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Equipment</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Submitted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ticket in tickets %}
+                        <tr>
+                            <td>{{ ticket.id }}</td>
+                            <td>{{ ticket.equipment }}</td>
+                            <td>{{ ticket.status }}</td>
+                            <td>{{ ticket.submitted }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4">No tickets on record.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+            <aside>
+                <h2>Operational Metrics</h2>
+                <dl>
+                    <dt>Active Reservations</dt>
+                    <dd>{{ active_reservations }}</dd>
+
+                    <dt>Open Tickets</dt>
+                    <dd>{{ open_tickets }}</dd>
+
+                    <dt>Reservations (Last 7 Days)</dt>
+                    <dd>{{ reservation_volume_7d }}</dd>
+
+                    <dt>Equipment Utilization</dt>
+                    <dd>{{ utilization_rate }}%</dd>
+
+                    <dt>Avg. Ticket Turnaround</dt>
+                    <dd>
+                        {% if avg_turnaround_hours is not none %}
+                            {{ avg_turnaround_hours }} hrs
+                        {% else %}
+                            No closed tickets yet
+                        {% endif %}
+                    </dd>
+                </dl>
+
+                <h3>Equipment Status</h3>
+                <ul>
+                    {% for row in equipment_status_summary %}
+                    <li>{{ row.status }}: {{ row.count }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h3>Low Stock Consumables</h3>
+                <ul>
+                    {% for item in low_stock_consumables %}
+                    <li>{{ item.name }} &mdash; {{ item.count }} remaining</li>
+                    {% else %}
+                    <li>Nothing low on stock.</li>
+                    {% endfor %}
+                </ul>
+            </aside>
+        </main>
+    </body>
+</html>

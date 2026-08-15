@@ -1,0 +1,334 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #222;
+    background-color: #f5f6f8;
+    line-height: 1.5;
+}
+
+h1, h2, h3 {
+    margin-top: 0;
+    color: #1a1a1a;
+}
+
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+header h1 {
+    color: white;
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+header details {
+    position: relative;
+}
+
+header summary {
+    cursor: pointer;
+    list-style: none;
+    font-size: 1.5rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+header summary::-webkit-details-marker {
+    display: none;
+}
+
+header summary:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+header nav {
+    position: absolute;
+    top: 2.25rem;
+    left: 0;
+    background-color: white;
+    color: #222;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    min-width: 200px;
+    z-index: 10;
+}
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 0;
+}
+
+header nav li a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #222;
+    text-decoration: none;
+}
+
+header nav li a:hover {
+    background-color: #f0f0f0;
+}
+
+header nav li:last-child {
+    border-top: 1px solid #e5e5e5;
+    margin-top: 0.25rem;
+    padding-top: 0.25rem;
+}
+
+main {
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+main:has(#reservation-table) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+section, aside {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    flex: 1 1 320px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+
+th, td {
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+th {
+    background-color: #f0f2f4;
+    font-weight: 600;
+}
+
+tbody tr:hover {
+    background-color: #fafafa;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+label {
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="datetime-local"],
+select,
+textarea {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    max-width: 400px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0;
+}
+
+ul li {
+    padding: 0.35rem 0;
+}
+
+ul li label {
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+button, input[type="submit"] {
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    padding: 0.55rem 1.25rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    align-self: flex-start;
+    margin-top: 0.5rem;
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: #1a2733;
+}
+
+main a {
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+main a:hover {
+    text-decoration: underline;
+}
+
+body:has(form[action$="login"]) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    min-height: 100vh;
+}
+
+body:has(form[action$="login"]) h1 {
+    text-align: center;
+}
+
+body:has(form[action$="login"]) form {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 2rem;
+    width: 320px;
+    align-items: stretch;
+}
+
+body:has(header h1:contains("Staff Portal")) main,
+body:has(header h1:contains("Maintenance Portal")) main {
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+body:has(header h1:contains("Staff Portal")) section,
+body:has(header h1:contains("Staff Portal")) aside,
+body:has(header h1:contains("Maintenance Portal")) section,
+body:has(header h1:contains("Maintenance Portal")) aside {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    flex: 1 1 320px;
+}
+
+body:has(header h1:contains("Staff Portal")) table,
+body:has(header h1:contains("Maintenance Portal")) table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+
+body:has(header h1:contains("Staff Portal")) th,
+body:has(header h1:contains("Maintenance Portal")) th,
+body:has(header h1:contains("Staff Portal")) td,
+body:has(header h1:contains("Maintenance Portal")) td {
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+body:has(header h1:contains("Staff Portal")) th,
+body:has(header h1:contains("Maintenance Portal")) th {
+    background-color: #f0f2f4;
+    font-weight: 600;
+}
+
+body:has(header h1:contains("Staff Portal")) tbody tr:hover,
+body:has(header h1:contains("Maintenance Portal")) tbody tr:hover {
+    background-color: #fafafa;
+}
+
+body:has(header h1:contains("Staff Portal")) form,
+body:has(header h1:contains("Maintenance Portal")) form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+body:has(header h1:contains("Staff Portal")) label,
+body:has(header h1:contains("Maintenance Portal")) label {
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+body:has(header h1:contains("Staff Portal")) input[type="text"],
+body:has(header h1:contains("Staff Portal")) input[type="number"],
+body:has(header h1:contains("Staff Portal")) select,
+body:has(header h1:contains("Staff Portal")) textarea,
+body:has(header h1:contains("Maintenance Portal")) input[type="text"],
+body:has(header h1:contains("Maintenance Portal")) input[type="number"],
+body:has(header h1:contains("Maintenance Portal")) select,
+body:has(header h1:contains("Maintenance Portal")) textarea {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    max-width: 400px;
+}
+
+body:has(header h1:contains("Staff Portal")) button,
+body:has(header h1:contains("Staff Portal")) input[type="submit"],
+body:has(header h1:contains("Maintenance Portal")) button,
+body:has(header h1:contains("Maintenance Portal")) input[type="submit"] {
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    padding: 0.55rem 1.25rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    align-self: flex-start;
+    margin-top: 0.5rem;
+}
+
+body:has(header h1:contains("Staff Portal")) button:hover,
+body:has(header h1:contains("Staff Portal")) input[type="submit"]:hover,
+body:has(header h1:contains("Maintenance Portal")) button:hover,
+body:has(header h1:contains("Maintenance Portal")) input[type="submit"]:hover {
+    background-color: #1a2733;
+}
+
+body:has(header h1:contains("Staff Portal")) main a,
+body:has(header h1:contains("Maintenance Portal")) main a {
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+body:has(header h1:contains("Staff Portal")) main a:hover,
+body:has(header h1:contains("Maintenance Portal")) main a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Dashboard</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <header>
+            <h1>MakerSpace Maintenance Portal</h1>
+            <details>
+                <summary>☰</summary>
+                <nav>
+                    <ul>
+                        <li><a href="{{ url_for('maintenance_dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('maintenance_equipment_page') }}">Equipment</a></li>
+                        <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                    </ul>
+                </nav>
+            </details>
+        </header>
+        <main>
+            <section>
+                <h2>Active Tickets</h2>
+                {% if unassigned_count %}
+                <p>{{ unassigned_count }} ticket(s) awaiting a technician.</p>
+                {% endif %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Equipment</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Submitted</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ticket in tickets %}
+                        <tr>
+                            <td>{{ ticket.id }}</td>
+                            <td>{{ ticket.equipment }}</td>
+                            <td>{{ ticket.status }}</td>
+                            <td>{{ ticket.submitted }}</td>
+                            <td>
+                                {% if ticket.assignedTo is none %}
+                                <form action="/maintenance/tickets/{{ ticket.id }}/claim" method="POST">
+                                    <button type="submit">Claim</button>
+                                </form>
+                                {% elif ticket.assignedTo == current_user_id %}
+                                <form action="/maintenance/tickets/{{ ticket.id }}/close" method="POST">
+                                    <button type="submit">Close</button>
+                                </form>
+                                <form action="/maintenance/tickets/{{ ticket.id }}/cancel" method="POST">
+                                    <button type="submit">Cancel</button>
+                                </form>
+                                {% else %}
+                                <span>Assigned to another technician</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5">No active tickets.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </body>
+</html>

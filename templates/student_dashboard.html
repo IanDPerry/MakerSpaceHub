@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Dashboard</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <header>
+            <h1>MakerSpace Student Portal</h1>
+            <details>
+                <summary>☰</summary>
+                <nav>
+                    <ul>
+                        <li><a href="{{ url_for('student_dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('show_reservation_form') }}">Request Reservation</a></li>
+                        <li><a href="{{ url_for('manage_reservations') }}">Manage Reservations</a></li>
+                        <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                    </ul>
+                </nav>
+            </details>
+        </header>
+        <main>
+            <section>
+                <h2>My Reservations</h2>
+                <table id="reservation-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reservation in reservations %}
+                        <tr>
+                            <td>{{ reservation.id }}</td>
+                            <td>{{ reservation.status }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+            <aside>
+                <h2>Alerts</h2>
+                <ul>
+                    {% for alert in alerts %}
+                    <li>{{ alert.message }}</li>
+                    {% endfor %}
+                </ul>
+            </aside>
+        </main>
+    </body>
+</html>
